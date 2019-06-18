@@ -32,7 +32,7 @@ proxy_handler = ProxyHandler({
 
 opener = build_opener(proxy_handler)
 try:
-    response2 = opener.open('https://baidu.com')
+    response2 = opener.open('https://smite.site')
     print(response2.read().decode('utf-8'))
 except URLError as e:
     print(e.reason)
@@ -40,9 +40,25 @@ except URLError as e:
 cookie = http.cookiejar.CookieJar()
 handler = urllib.request.HTTPCookieProcessor(cookie)
 opener = urllib.request.build_opener(handler)
-response3 = opener.open('http://baidu.com')
+response3 = opener.open('http://smite.site')
 for item in cookie:
-    print(item.name + '=' + item.value)
+    print(item.name + ' = ' + item.value)
+
+filename = 'cookies.txt'
+#cookie = http.cookiejar.MozillaCookieJar(filename)
+cookie = http.cookiejar.LWPCookieJar(filename)
+handler = urllib.request.HTTPCookieProcessor(cookie)
+opener = urllib.request.build_opener(handler)
+response4=opener.open('http://smite.site')
+cookie.save(ignore_discard=True, ignore_expires=True)
+
+cookie = http.cookiejar.LWPCookieJar()
+cookie.load('cookies.txt', ignore_discard=True, ignore_expires=True)
+handler = urllib.request.HTTPCookieProcessor(cookie)
+opener = urllib.request.build_opener(handler)
+response = opener.open('http://smite.site')
+print(response.read().decode('utf-8'))
+
 
 url = 'http://httpbin.org/post'
 headers = {
