@@ -23,6 +23,7 @@ tutorial/
 
 To put our spider to work, go to the project’s top level directory and run:
 scrapy crawl quotes
+scrapy crawl quotes -o quotes.jl
 
 scrapy shell "http://quotes.toscrape.com/page/1/"
 response.css('title')
@@ -48,3 +49,10 @@ https://docs.scrapy.org/en/latest/topics/developer-tools.html#topics-developer-t
 response.xpath('//span[has-class("text")]/text()').getall()
 
 response.xpath('//title')
+
+# Following links
+response.css('li.next a').get()
+response.css('li.next a::attr(href)').get()
+response.css('li.next a').attrib['href']
+
+scrapy crawl quotes -o quotes-humor.json -a tag=humor
