@@ -1,0 +1,3 @@
+#LWP-Cookies-2.0
+Set-Cookie3: JSESSIONID="node01ruqyeh9cliahhf4e4ou8ht96195.node0"; path="/"; domain="smite.site"; path_spec; discard; version=0
+Set-Cookie3: skin=9IPHP; path="/"; domain="smite.site"; path_spec; expires="2019-06-18 11:31:56Z"; version=0

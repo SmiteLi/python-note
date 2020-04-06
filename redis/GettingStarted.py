@@ -1,5 +1,15 @@
 # https://pypi.org/project/redis/
 import redis, time
+from redis.sentinel import Sentinel
+
+sentinel = Sentinel([('localhost', 26379),('55.qiweioa.cn', 8088)], socket_timeout=1)
+sentinel.discover_master('mymaster')
+sentinel.discover_slaves('mymaster')
+# master = sentinel.master_for('redis-test', socket_timeout=0.1)
+master = sentinel.master_for('redis-test', socket_timeout=0.1, password='Admin123.com')
+slave = sentinel.slave_for('mymaster', socket_timeout=0.1, pa)
+master.set('foo', 'bar')
+slave.get('foo')
 
 r = redis.Redis(host='55.qiweioa.cn', port=8088, db=0, password='Admin123.com')
 r.set('foo', 'bar')
@@ -71,3 +81,9 @@ def client_side_incr(pipe):
     pipe.set('OUR-SEQUENCE-KEY', next_value)
 
 r.transaction(client_side_incr, 'OUR-SEQUENCE-KEY')
+
+p = r.pubsub()
+r.publish('my-first-channel', 'some data')
+p.subscribe('my-first-channel', 'my-second-channel')
+p.psubscribe('my-*')
+p.get_message()
