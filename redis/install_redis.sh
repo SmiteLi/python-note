@@ -12,4 +12,5 @@ docker run  -d \
 # pip install hiredis
 # pip install redis
 # py -m pip install redis
+# pip install hiredis
 

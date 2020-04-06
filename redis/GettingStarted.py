@@ -7,9 +7,16 @@ sentinel.discover_master('mymaster')
 sentinel.discover_slaves('mymaster')
 # master = sentinel.master_for('redis-test', socket_timeout=0.1)
 master = sentinel.master_for('redis-test', socket_timeout=0.1, password='Admin123.com')
-slave = sentinel.slave_for('mymaster', socket_timeout=0.1, pa)
+# slave only for read
+slave = sentinel.slave_for('mymaster', socket_timeout=0.1)
 master.set('foo', 'bar')
+master.set('test-key2', 'test-value2')
 slave.get('foo')
+master.get('test-key2')
+
+master.config_get()
+for i in master.config_get():
+    print(i)
 
 r = redis.Redis(host='55.qiweioa.cn', port=8088, db=0, password='Admin123.com')
 r.set('foo', 'bar')
